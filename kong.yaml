@@ -1,0 +1,521 @@
+_format_version: "1.1"
+services:
+- connect_timeout: 60000
+  enabled: true
+  host: mockbin.org
+  name: Swagger_Petstore
+  path: /bin/YOUR_MOCKBIN_ID
+  plugins:
+  - config:
+      echo_downstream: true
+      generator: uuid#counter
+      header_name: Kong-Request-ID
+    enabled: true
+    name: correlation-id
+    protocols:
+    - grpc
+    - grpcs
+    - http
+    - https
+    tags:
+    - OAS3_import
+    - OAS3file_petstore-with-plugins.yaml
+  - config:
+      anonymous: null
+      hide_credentials: true
+      key_in_body: false
+      key_in_header: true
+      key_in_query: true
+      key_names:
+      - api_key
+      - apikey
+      run_on_preflight: true
+    enabled: true
+    name: key-auth
+    protocols:
+    - grpc
+    - grpcs
+    - http
+    - https
+    tags:
+    - OAS3_import
+    - OAS3file_petstore-with-plugins.yaml
+  - config:
+      day: null
+      fault_tolerant: true
+      header_name: null
+      hide_client_headers: false
+      hour: 10000
+      limit_by: consumer
+      minute: null
+      month: null
+      path: null
+      policy: local
+      redis_database: 0
+      redis_host: null
+      redis_password: null
+      redis_port: 6379
+      redis_server_name: null
+      redis_ssl: false
+      redis_ssl_verify: false
+      redis_timeout: 2000
+      redis_username: null
+      second: 1
+      year: null
+    enabled: true
+    name: rate-limiting
+    protocols:
+    - grpc
+    - grpcs
+    - http
+    - https
+    tags:
+    - OAS3_import
+    - OAS3file_petstore-with-plugins.yaml
+  port: 443
+  protocol: https
+  read_timeout: 60000
+  retries: 5
+  routes:
+  - https_redirect_status_code: 426
+    methods:
+    - POST
+    name: Swagger_Petstore-addPet
+    path_handling: v0
+    paths:
+    - /pet$
+    plugins:
+    - config:
+        credentials: true
+        exposed_headers:
+        - X-Auth-Token
+        headers:
+        - Accept
+        - Accept-Version
+        - Content-Length
+        - Content-MD5
+        - Content-Type
+        - Date
+        - X-Auth-Token
+        max_age: 3600
+        methods:
+        - GET
+        - POST
+        origins:
+        - some-whitelisted-cors-origin.com
+        preflight_continue: false
+      enabled: true
+      name: cors
+      protocols:
+      - grpc
+      - grpcs
+      - http
+      - https
+      tags:
+      - OAS3_import
+      - OAS3file_petstore-with-plugins.yaml
+    - config:
+        add:
+          body: []
+          headers:
+          - x-injected-header:some-injected-value
+          - x-another-injected-header:another-injected-value
+          querystring: []
+        append:
+          body: []
+          headers: []
+          querystring: []
+        http_method: null
+        remove:
+          body: []
+          headers: []
+          querystring: []
+        rename:
+          body:
+          - photoUrls:urls
+          headers: []
+          querystring: []
+        replace:
+          body: []
+          headers: []
+          querystring: []
+          uri: null
+      enabled: true
+      name: request-transformer
+      protocols:
+      - grpc
+      - grpcs
+      - http
+      - https
+      tags:
+      - OAS3_import
+      - OAS3file_petstore-with-plugins.yaml
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: false
+    tags:
+    - OAS3_import
+    - OAS3file_petstore-with-plugins.yaml
+  - https_redirect_status_code: 426
+    methods:
+    - POST
+    name: Swagger_Petstore-createUser
+    path_handling: v0
+    paths:
+    - /user$
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: false
+    tags:
+    - OAS3_import
+    - OAS3file_petstore-with-plugins.yaml
+  - https_redirect_status_code: 426
+    methods:
+    - POST
+    name: Swagger_Petstore-createUsersWithArrayInput
+    path_handling: v0
+    paths:
+    - /user/createWithArray$
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: false
+    tags:
+    - OAS3_import
+    - OAS3file_petstore-with-plugins.yaml
+  - https_redirect_status_code: 426
+    methods:
+    - POST
+    name: Swagger_Petstore-createUsersWithListInput
+    path_handling: v0
+    paths:
+    - /user/createWithList$
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: false
+    tags:
+    - OAS3_import
+    - OAS3file_petstore-with-plugins.yaml
+  - https_redirect_status_code: 426
+    methods:
+    - DELETE
+    name: Swagger_Petstore-deleteOrder
+    path_handling: v0
+    paths:
+    - /store/order/(?<orderId>[^\/]+)$
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: false
+    tags:
+    - OAS3_import
+    - OAS3file_petstore-with-plugins.yaml
+  - https_redirect_status_code: 426
+    methods:
+    - DELETE
+    name: Swagger_Petstore-deletePet
+    path_handling: v0
+    paths:
+    - /pet/(?<petId>[^\/]+)$
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: false
+    tags:
+    - OAS3_import
+    - OAS3file_petstore-with-plugins.yaml
+  - https_redirect_status_code: 426
+    methods:
+    - DELETE
+    name: Swagger_Petstore-deleteUser
+    path_handling: v0
+    paths:
+    - /user/(?<username>[^\/]+)$
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: false
+    tags:
+    - OAS3_import
+    - OAS3file_petstore-with-plugins.yaml
+  - https_redirect_status_code: 426
+    methods:
+    - GET
+    name: Swagger_Petstore-findPetsByStatus
+    path_handling: v0
+    paths:
+    - /pet/findByStatus$
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: false
+    tags:
+    - OAS3_import
+    - OAS3file_petstore-with-plugins.yaml
+  - https_redirect_status_code: 426
+    methods:
+    - GET
+    name: Swagger_Petstore-findPetsByTags
+    path_handling: v0
+    paths:
+    - /pet/findByTags$
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: false
+    tags:
+    - OAS3_import
+    - OAS3file_petstore-with-plugins.yaml
+  - https_redirect_status_code: 426
+    methods:
+    - GET
+    name: Swagger_Petstore-getInventory
+    path_handling: v0
+    paths:
+    - /store/inventory$
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: false
+    tags:
+    - OAS3_import
+    - OAS3file_petstore-with-plugins.yaml
+  - https_redirect_status_code: 426
+    methods:
+    - GET
+    name: Swagger_Petstore-getOrderById
+    path_handling: v0
+    paths:
+    - /store/order/(?<orderId>[^\/]+)$
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: false
+    tags:
+    - OAS3_import
+    - OAS3file_petstore-with-plugins.yaml
+  - https_redirect_status_code: 426
+    methods:
+    - GET
+    name: Swagger_Petstore-getPetById
+    path_handling: v0
+    paths:
+    - /pet/(?<petId>[^\/]+)$
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: false
+    tags:
+    - OAS3_import
+    - OAS3file_petstore-with-plugins.yaml
+  - https_redirect_status_code: 426
+    methods:
+    - GET
+    name: Swagger_Petstore-getUserByName
+    path_handling: v0
+    paths:
+    - /user/(?<username>[^\/]+)$
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: false
+    tags:
+    - OAS3_import
+    - OAS3file_petstore-with-plugins.yaml
+  - https_redirect_status_code: 426
+    methods:
+    - GET
+    name: Swagger_Petstore-loginUser
+    path_handling: v0
+    paths:
+    - /user/login$
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: false
+    tags:
+    - OAS3_import
+    - OAS3file_petstore-with-plugins.yaml
+  - https_redirect_status_code: 426
+    methods:
+    - GET
+    name: Swagger_Petstore-logoutUser
+    path_handling: v0
+    paths:
+    - /user/logout$
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: false
+    tags:
+    - OAS3_import
+    - OAS3file_petstore-with-plugins.yaml
+  - https_redirect_status_code: 426
+    methods:
+    - POST
+    name: Swagger_Petstore-placeOrder
+    path_handling: v0
+    paths:
+    - /store/order$
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: false
+    tags:
+    - OAS3_import
+    - OAS3file_petstore-with-plugins.yaml
+  - https_redirect_status_code: 426
+    methods:
+    - PUT
+    name: Swagger_Petstore-updatePet
+    path_handling: v0
+    paths:
+    - /pet$
+    plugins:
+    - config:
+        credentials: true
+        exposed_headers:
+        - X-Auth-Token
+        headers:
+        - Accept
+        - Accept-Version
+        - Content-Length
+        - Content-MD5
+        - Content-Type
+        - Date
+        - X-Auth-Token
+        max_age: 3600
+        methods:
+        - GET
+        - POST
+        origins:
+        - some-whitelisted-cors-origin.com
+        preflight_continue: false
+      enabled: true
+      name: cors
+      protocols:
+      - grpc
+      - grpcs
+      - http
+      - https
+      tags:
+      - OAS3_import
+      - OAS3file_petstore-with-plugins.yaml
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: false
+    tags:
+    - OAS3_import
+    - OAS3file_petstore-with-plugins.yaml
+  - https_redirect_status_code: 426
+    methods:
+    - POST
+    name: Swagger_Petstore-updatePetWithForm
+    path_handling: v0
+    paths:
+    - /pet/(?<petId>[^\/]+)$
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: false
+    tags:
+    - OAS3_import
+    - OAS3file_petstore-with-plugins.yaml
+  - https_redirect_status_code: 426
+    methods:
+    - PUT
+    name: Swagger_Petstore-updateUser
+    path_handling: v0
+    paths:
+    - /user/(?<username>[^\/]+)$
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: false
+    tags:
+    - OAS3_import
+    - OAS3file_petstore-with-plugins.yaml
+  tags:
+  - OAS3_import
+  - OAS3file_petstore-with-plugins.yaml
+  write_timeout: 60000

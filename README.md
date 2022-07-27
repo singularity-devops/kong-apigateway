@@ -125,7 +125,7 @@ kubectl get pods -n kong
 	The request should succeed this time. Also note the CORS headers in the response which indicates the CORS plugin is working as expected:
 	`Access-Control-Allow-Origin: some-whitelisted-cors-origin.com`
 	
-	If the request is send fast enough, it will also trigger the Rate Limiting plugin.
+	If the request is sent fast enough, it will also trigger the Rate Limiting plugin.
 9. Inspect the Mockbin history to see how the `kong-request-id` header along with the other arbitrary headers are present. These were injected by the Correlation ID and Request Transformer plugins as per the OpenAPI specification configuration. Similarly, note how the `photoUrls` key name in the request body has been transformed into `urls` as per the configuration.
 
 	Feel free to make changes to the OpenAPI specification and repeat steps 5 and 6 to update the Kong Gateway configuration. After all, the entire point is that the specification can be used for not just initialising, but also updating the API gateway configuration.
