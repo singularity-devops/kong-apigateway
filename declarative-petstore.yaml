@@ -1,0 +1,274 @@
+_format_version: "1.1"
+services:
+  - name: Swagger_Petstore
+    protocol: https
+    host: mockbin.org
+    port: 443
+    path: /bin/YOUR_MOCKBIN_ID
+    plugins:
+      - name: key-auth
+        enabled: true
+        config:
+          key_names:
+            - api_key
+            - apikey
+          key_in_body: false
+          hide_credentials: true
+        tags:
+          - OAS3_import
+          - OAS3file_petstore-with-plugins.yaml
+      - name: rate-limiting
+        config:
+          second: 1
+          hour: 10000
+          policy: local
+          fault_tolerant: true
+          hide_client_headers: false
+          redis_ssl: false
+          redis_ssl_verify: false
+        tags:
+          - OAS3_import
+          - OAS3file_petstore-with-plugins.yaml
+      - name: correlation-id
+        config:
+          header_name: Kong-Request-ID
+          generator: uuid#counter
+          echo_downstream: true
+        tags:
+          - OAS3_import
+          - OAS3file_petstore-with-plugins.yaml
+    routes:
+      - tags:
+          - OAS3_import
+          - OAS3file_petstore-with-plugins.yaml
+        name: Swagger_Petstore-addPet
+        methods:
+          - POST
+        paths:
+          - /pet$
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              rename:
+                body:
+                  - photoUrls:urls
+              add:
+                headers:
+                  - x-injected-header:some-injected-value
+                  - x-another-injected-header:another-injected-value
+            tags:
+              - OAS3_import
+              - OAS3file_petstore-with-plugins.yaml
+          - name: cors
+            config:
+              origins:
+                - some-whitelisted-cors-origin.com
+              methods:
+                - GET
+                - POST
+              headers:
+                - Accept
+                - Accept-Version
+                - Content-Length
+                - Content-MD5
+                - Content-Type
+                - Date
+                - X-Auth-Token
+              exposed_headers:
+                - X-Auth-Token
+              credentials: true
+              max_age: 3600
+              preflight_continue: false
+            tags:
+              - OAS3_import
+              - OAS3file_petstore-with-plugins.yaml
+      - tags:
+          - OAS3_import
+          - OAS3file_petstore-with-plugins.yaml
+        name: Swagger_Petstore-updatePet
+        methods:
+          - PUT
+        paths:
+          - /pet$
+        strip_path: false
+        plugins:
+          - name: cors
+            config:
+              origins:
+                - some-whitelisted-cors-origin.com
+              methods:
+                - GET
+                - POST
+              headers:
+                - Accept
+                - Accept-Version
+                - Content-Length
+                - Content-MD5
+                - Content-Type
+                - Date
+                - X-Auth-Token
+              exposed_headers:
+                - X-Auth-Token
+              credentials: true
+              max_age: 3600
+              preflight_continue: false
+            tags:
+              - OAS3_import
+              - OAS3file_petstore-with-plugins.yaml
+      - tags:
+          - OAS3_import
+          - OAS3file_petstore-with-plugins.yaml
+        name: Swagger_Petstore-findPetsByStatus
+        methods:
+          - GET
+        paths:
+          - /pet/findByStatus$
+        strip_path: false
+      - tags:
+          - OAS3_import
+          - OAS3file_petstore-with-plugins.yaml
+        name: Swagger_Petstore-findPetsByTags
+        methods:
+          - GET
+        paths:
+          - /pet/findByTags$
+        strip_path: false
+      - tags:
+          - OAS3_import
+          - OAS3file_petstore-with-plugins.yaml
+        name: Swagger_Petstore-getPetById
+        methods:
+          - GET
+        paths:
+          - /pet/(?<petId>[^\/]+)$
+        strip_path: false
+      - tags:
+          - OAS3_import
+          - OAS3file_petstore-with-plugins.yaml
+        name: Swagger_Petstore-updatePetWithForm
+        methods:
+          - POST
+        paths:
+          - /pet/(?<petId>[^\/]+)$
+        strip_path: false
+      - tags:
+          - OAS3_import
+          - OAS3file_petstore-with-plugins.yaml
+        name: Swagger_Petstore-deletePet
+        methods:
+          - DELETE
+        paths:
+          - /pet/(?<petId>[^\/]+)$
+        strip_path: false
+      - tags:
+          - OAS3_import
+          - OAS3file_petstore-with-plugins.yaml
+        name: Swagger_Petstore-getInventory
+        methods:
+          - GET
+        paths:
+          - /store/inventory$
+        strip_path: false
+      - tags:
+          - OAS3_import
+          - OAS3file_petstore-with-plugins.yaml
+        name: Swagger_Petstore-placeOrder
+        methods:
+          - POST
+        paths:
+          - /store/order$
+        strip_path: false
+      - tags:
+          - OAS3_import
+          - OAS3file_petstore-with-plugins.yaml
+        name: Swagger_Petstore-getOrderById
+        methods:
+          - GET
+        paths:
+          - /store/order/(?<orderId>[^\/]+)$
+        strip_path: false
+      - tags:
+          - OAS3_import
+          - OAS3file_petstore-with-plugins.yaml
+        name: Swagger_Petstore-deleteOrder
+        methods:
+          - DELETE
+        paths:
+          - /store/order/(?<orderId>[^\/]+)$
+        strip_path: false
+      - tags:
+          - OAS3_import
+          - OAS3file_petstore-with-plugins.yaml
+        name: Swagger_Petstore-createUser
+        methods:
+          - POST
+        paths:
+          - /user$
+        strip_path: false
+      - tags:
+          - OAS3_import
+          - OAS3file_petstore-with-plugins.yaml
+        name: Swagger_Petstore-createUsersWithArrayInput
+        methods:
+          - POST
+        paths:
+          - /user/createWithArray$
+        strip_path: false
+      - tags:
+          - OAS3_import
+          - OAS3file_petstore-with-plugins.yaml
+        name: Swagger_Petstore-createUsersWithListInput
+        methods:
+          - POST
+        paths:
+          - /user/createWithList$
+        strip_path: false
+      - tags:
+          - OAS3_import
+          - OAS3file_petstore-with-plugins.yaml
+        name: Swagger_Petstore-loginUser
+        methods:
+          - GET
+        paths:
+          - /user/login$
+        strip_path: false
+      - tags:
+          - OAS3_import
+          - OAS3file_petstore-with-plugins.yaml
+        name: Swagger_Petstore-logoutUser
+        methods:
+          - GET
+        paths:
+          - /user/logout$
+        strip_path: false
+      - tags:
+          - OAS3_import
+          - OAS3file_petstore-with-plugins.yaml
+        name: Swagger_Petstore-getUserByName
+        methods:
+          - GET
+        paths:
+          - /user/(?<username>[^\/]+)$
+        strip_path: false
+      - tags:
+          - OAS3_import
+          - OAS3file_petstore-with-plugins.yaml
+        name: Swagger_Petstore-updateUser
+        methods:
+          - PUT
+        paths:
+          - /user/(?<username>[^\/]+)$
+        strip_path: false
+      - tags:
+          - OAS3_import
+          - OAS3file_petstore-with-plugins.yaml
+        name: Swagger_Petstore-deleteUser
+        methods:
+          - DELETE
+        paths:
+          - /user/(?<username>[^\/]+)$
+        strip_path: false
+    tags:
+      - OAS3_import
+      - OAS3file_petstore-with-plugins.yaml
